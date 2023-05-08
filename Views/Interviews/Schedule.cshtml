@@ -1,0 +1,30 @@
+﻿@*@model sp23Team13FinalProject.Models.ViewModels.ScheduleViewModel
+
+<h2>Schedule an Interview</h2>
+
+<h3>Application Details:</h3>
+<div>
+    <strong>Company:</strong> @Model.CompanyName<br />
+    <strong>Position:</strong> @Model.PositionTitle
+</div>
+
+@if (Model.InterviewSlots.Count > 0)
+{
+    <h3>Available Interview Slots:</h3>
+    <form method="post">
+        <div class="form-group">
+            <label for="interviewSlot">Select an Interview Slot:</label>
+            <select class="form-control" name="interviewSlot" id="interviewSlot">
+                @foreach (var slot in Model.InterviewSlots)
+                {
+                    <option value="@slot.InterviewSlotId">@slot.StartTime</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Schedule Interview</button>
+    </form>
+}
+else
+{
+    <p>Sorry, there are no interview slots available for this position at the moment.</p>
+}*@

@@ -1,0 +1,29 @@
+@model sp23Team13FinalProject.Models.ViewModels.InterviewViewModel
+@{
+    ViewData["Title"] = "UpdatePosition";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SelectTimeSlot" asp-route-id="@Model.SelectedPositionId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SelectedPositionId" class="control-label"></label>
+                <select asp-for="SelectedPositionId" name="positionId" class="form-control" asp-items="@Model.Positions">
+                    <option value="">-- Select Position --</option>
+                </select>
+                <span asp-validation-for="SelectedPositionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Select a Time Slot</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

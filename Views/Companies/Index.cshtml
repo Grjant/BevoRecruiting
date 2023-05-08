@@ -1,0 +1,76 @@
+@model IEnumerable<sp23Team13FinalProject.Models.Company>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <h1>Search Employers</h1>
+
+    <a asp-action="DetailedSearch" class="btn btn-success">Detailed Search</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompanyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Industry)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Location)
+                    </th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Industry1))
+                        {
+                            @Html.DisplayFor(modelItem => item.Industry1)
+                            @if (!string.IsNullOrEmpty(item.Industry2) || !string.IsNullOrEmpty(item.Industry3))
+                            {
+                                <span style="margin-left:-5px;">,</span>
+                            }
+                        }
+                        @if (!string.IsNullOrEmpty(item.Industry2))
+                        {
+                            @Html.DisplayFor(modelItem => item.Industry2)
+                            @if (!string.IsNullOrEmpty(item.Industry3))
+                            {
+                                <span style="margin-left:-5px;">,</span>
+                            }
+                        }
+                        @if (!string.IsNullOrEmpty(item.Industry3))
+                        {
+                            @Html.DisplayFor(modelItem => item.Industry3)
+                        }
+                    </td>
+                    <td>
+                        @if (User.Identity.IsAuthenticated && Model.Any())
+                        {
+                            <a asp-action="Details" asp-route-id="@item.CompanyID">View Profile</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

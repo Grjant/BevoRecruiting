@@ -1,0 +1,28 @@
+﻿@model sp23Team13FinalProject.Models.ViewModels.RecruiterSch
+
+<h2>Search Interviews by a Date Range</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RecruiterSearchForm" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SelectedStartDate" class="control-label"></label>
+                <input type="text" asp-for="SelectedStartDate" class="form-control datepicker" placeholder="MM/DD/YYYY" />
+                <span asp-validation-for="SelectedStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedEndDate" class="control-label"></label>
+                <input type="text" asp-for="SelectedEndDate" class="form-control" placeholder="MM/DD/YYYY" />
+                <span asp-validation-for="SelectedEndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

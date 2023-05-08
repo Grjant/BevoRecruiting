@@ -1,0 +1,82 @@
+@model sp23Team13FinalProject.Models.ViewModels.TimeSlotViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Interviews" asp-action="ReScheduleTimeSlot">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="SelectedPositionId" name="positionId" value="@Model.SelectedPositionId" />
+
+            <div class="form-group">
+                <label asp-for="SelectedInterviewId" class="control-label"></label>
+                <select asp-for="SelectedInterviewId" name="selectedInterviewId" class="form-control" asp-items="@Model.TimeSlots"></select>
+                <span asp-validation-for="SelectedInterviewId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Reschedule Interview</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+@*<html>
+    <head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    </head>
+    <body>
+    <h4>Interview</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="InterviewID" />
+                <div class="form-group">
+                    <label asp-for="InterviewerName" class="control-label"></label>
+                    <input asp-for="InterviewerName" class="form-control" readonly />
+                    <span asp-validation-for="InterviewerName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RoomNumber" class="control-label"></label>
+                    <input asp-for="RoomNumber" class="form-control" readonly/>
+                    <span asp-validation-for="RoomNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StartTime" class="control-label"></label>
+                    <input asp-for="StartTime" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    </body>*@

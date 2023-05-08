@@ -1,0 +1,77 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Detailed Search";
+}
+
+<br />
+
+<h1>Detailed Position Search</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DisplaySearchResults">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PositionSearch" class="control-label"></label>
+                <input asp-for="PositionSearch" class="form-control" placeholder="Search by Position Name" />
+                <span asp-validation-for="PositionSearch" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="DescriptionSearch" class="control-label"></label>
+                <input asp-for="DescriptionSearch" class="form-control" placeholder="Search by Position Description" />
+                <span asp-validation-for="DescriptionSearch" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="PositionTypeSearch" class="control-label"></label>
+                <select asp-for="PositionTypeSearch" asp-items="Html.GetEnumSelectList<PositionType>()" class="form-control" placeholder="Search by Position Type">
+                    <option selected="selected" value="">All Position Types</option>
+                </select>
+                <span asp-validation-for="PositionTypeSearch" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="MajorSearch" class="control-label"></label>
+                @Html.DropDownListFor(model => model.MajorSearch, (SelectList)ViewBag.AllMajors, new { @class = "form-control" })
+                <span asp-validation-for="MajorSearch" class="text-danger" placeholder="Search by Applicable Majors"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="CompanySearch" class="control-label"></label>
+                <input asp-for="CompanySearch" class="form-control"  placeholder="Search by Company"/>
+                <span asp-validation-for="CompanySearch" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="IndustrySearch" class="control-label"></label>
+                <input asp-for="IndustrySearch" class="form-control" placeholder="Search by Industry" />
+                <span asp-validation-for="IndustrySearch" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="LocationSearch" class="control-label"></label>
+                <input asp-for="LocationSearch" class="form-control" placeholder="Search by Location" />
+                <span asp-validation-for="LocationSearch" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="DateSearch" class="control-label"></label>
+                <input asp-for="DateSearch" class="form-control" placeholder="Search by Deadline" />
+                <span asp-validation-for="DateSearch" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

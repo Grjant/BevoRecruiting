@@ -1,0 +1,72 @@
+﻿@model IEnumerable<sp23Team13FinalProject.Models.AppUser>
+
+@{
+    ViewData["Title"] = "StudentSearch";
+}
+
+<br />
+<h1>Student Search</h1>
+
+<form asp-action="StudentSearch" asp-controller="AppUsers" method="get">
+    <p class="form-group">
+        Search by Name or Major: <input name="search" class="form-control" placeholder="Name or Major" /><br />
+        Search by Graduation Year: <input name="graduationYear" class="form-control" placeholder="Graduation Year" /><br />
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a asp-action="StudentSearch" class="btn btn-danger">Show All</a>
+    </p>
+</form>
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <p>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("CSO"))
+        {
+            <a asp-action="Create" asp-controller="AppUsers">Create New</a>
+        }
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GraduationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Major)
+                </th>
+                <th>
+                     
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.GraduationDate)
+                    </td>
+                    <td>
+                        @if (user.Major != null)
+                        {
+                            @Html.DisplayFor(modelItem => user.Major.MajorName)
+                        }
+                    </td>
+                    <td>
+                    <a asp-action="Details" asp-controller="AppUsers" asp-route-id="@user.Id" class="btn btn-success">Student Profile</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

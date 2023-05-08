@@ -1,0 +1,67 @@
+﻿@model IEnumerable<AppUser>
+
+@{
+    ViewData["Title"] = "AddStudents";
+}
+
+<br />
+<h1>Potential Students to Add</h1>
+
+<!DOCTYPE html>
+
+<html>
+<body>
+
+    <form asp-action="AddStudents" asp-controller="Applications" method="post">
+        <input type="hidden" name="positionID" value="@ViewBag.PositionID" />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GraduationDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Major)
+                    </th>
+                    <th>
+                        Add Student
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => user.GraduationDate)
+                        </td>
+                        <td>
+                            @if (user.Major != null)
+                            {
+                                @Html.DisplayFor(modelItem => user.Major.MajorName)
+                            }
+                        </td>
+                        <td>
+                            <input type="checkbox" name="selectedStudents" value="@user.Id" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success">Add Selected Students</button>
+    </form>
+    <a asp-action="GetStudentsbyPosition" asp-controller="Applications">Cancel and Return to List</a>
+</body>
+</html>

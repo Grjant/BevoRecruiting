@@ -1,0 +1,81 @@
+@model sp23Team13FinalProject.Models.ViewModels.EditRecruiterProfileViewModel
+
+@{
+    ViewData["Title"] = "EditRecruiterProfile";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+    <h4>Edit Profile</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="EditRecruiterProfile" asp-controller="AppUsers">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @if (User.IsInRole("Recruiter"))
+                {
+                    <div class="form-group">
+                        <label asp-for="CompanyName" class="control-label"></label>
+                        <input asp-for="CompanyName" class="form-control" readonly />
+                    </div>
+                    <a asp-action="Edit" asp-controller="Companies" asp-route-id="@Model.SelectedCompanyID">Edit Company Profile</a>
+                }
+                @if (User.IsInRole("CSO"))
+                {
+                    <div class="form-group">
+                        <label asp-for="SelectedCompanyID" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.SelectedCompanyID, (SelectList)ViewBag.AllCompanies, "Select a Company", new { @class = "form-control" })
+                    </div>
+                }
+
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                @if (User.IsInRole("CSO"))
+                {
+                    <div>
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="ActiveStatus" type="checkbox" />
+                            @Html.DisplayNameFor(model => model.ActiveStatus)
+                        </label>
+                    </div>
+                }
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <dt>Password:</dt>
+                <dd>
+                    <a asp-action="ChangePassword" asp-controller="Account">Change Password</a>
+                </dd>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            </form>
+        </div>
+    </div>
+    @if (User.IsInRole("CSO"))
+        {
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+        }
+    </body>
+</html>

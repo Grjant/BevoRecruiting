@@ -1,0 +1,189 @@
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+@inject UserManager<AppUser> userManager
+<html>
+<head>
+    <title>Index Page</title>
+    <style>
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            align-items: center;
+            height: 100vh;
+            padding: 0 20px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            align-items: stretch;
+            margin-bottom: 30px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 30%;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .card img {
+                border-radius: 8px;
+                margin-bottom: 20px;
+                max-width: 100%;
+            }
+
+            .card h2, .card p {
+                margin: 0;
+            }
+
+            .card button {
+                background-color: #ff8c00;
+                border: none;
+                border-radius: 4px;
+                color: #fff;
+                cursor: pointer;
+                font-size: 16px;
+                padding: 10px 20px;
+                margin-top: auto;
+            }
+
+        .form-left .form-left {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    </style>
+
+</head>
+
+
+<div class="container">
+    <div class="header">
+        @if (User.Identity.IsAuthenticated)
+        {
+
+            var appUser = await userManager.Users
+            .Include(u => u.Company)
+            .SingleOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            var daName = $"{appUser.FirstName} {appUser.LastName}";
+
+            <h1>Welcome to Bevo Recruiting, @daName!</h1>
+            <div style="text-align:center;">
+                <img src="~/img/logo.png" alt="Your Logo">
+            </div>
+            <br />
+            <div class="card-group">
+                @if (User.IsInRole("Recruiter"))
+                {
+                    var companyId = appUser.Company.CompanyID;
+                    <div class="card" style="height: auto;">
+                        <img src="~/img/meme.jpeg" class="card-img-top" alt="My Company Profile">
+                        <div class="card-body">
+                            <h2 class="card-title">My Company</h2>
+                            <p class="card-text">View or edit your company profile</p>
+                            <a asp-controller="Companies" asp-action="Details" asp-route-id="@companyId" class="btn btn-success">View My Company</a>
+                            <br />
+                            <a asp-controller="Companies" asp-action="Edit" asp-route-id="@companyId" class="btn btn-success">Edit My Company</a>
+
+                        </div>
+                    </div>
+                }
+                <div class="card" style="height: auto;">
+                    <img src="~/img/p1.jpg" class="card-img-top" alt="View Positions">
+                    <div class="card-body">
+                        <h2 class="card-title">View Positions</h2>
+                        <p class="card-text">View all available positions</p>
+                        <a asp-controller="Positions" asp-action="Index" class="btn btn-success">View Positions</a>
+                    </div>
+                </div>
+                <div class="card" style="height: auto;">
+                    <img src="~/img/b.jpeg" class="card-img-top" alt="My Applications">
+                    <div class="card-body">
+                        <h2 class="card-title">My Applications</h2>
+                        <p class="card-text">View all of your job applications</p>
+                        <a asp-controller="Applications" asp-action="Index" class="btn btn-success">My Applications</a>
+                    </div>
+                </div>
+                <div class="card" style="height: auto;">
+                    <img src="~/img/i.jpeg" class="card-img-top" alt="My Interviews">
+                    <div class="card-body">
+                        <h2 class="card-title">My Interviews</h2>
+                        <p class="card-text">View all of your scheduled interviews</p>
+                        <a asp-controller="Interviews" asp-action="Index" class="btn btn-success">My Interviews</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        }
+        else
+        {
+            <h1>Welcome to Bevo Recruiting!</h1>
+            <div style="text-align:center;">
+                <img src="~/img/logo.png" alt="Your Logo">
+            </div>
+        }
+
+    </div>
+    <body>
+        <div class="container" style="float: right; width: 50%;">
+            <p>Current date: @ViewBag.CurrentDate</p>
+
+            <h2>Change date</h2>
+
+            @*<form asp-action="UpdateDate" method="post" class="form-left">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="newDate">New date:</label>
+                <input type="text" name="newDate" id="newDate" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">Change</button>
+        </form>*@
+
+            <form asp-action="UpdateDate" method="post" class="form-left">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="newDate">New date:</label>
+                    <input type="text" name="newDate" id="newDate" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-success">Change</button>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('newDate').value = new Date().toLocaleString()">Today</button>
+            </form>
+
+            <script>function setCurrentDate() {
+                    var today = new Date();
+                    var day = String(today.getDate()).padStart(2, '0');
+                    var month = String(today.getMonth() + 1).padStart(2, '0');
+                    var year = today.getFullYear();
+                    var formattedDate = month + '/' + day + '/' + year;
+                    document.getElementById("newDate").value = formattedDate;
+                }</script>
+
+        </div>
+
+    </body>
+    
+
+</html>

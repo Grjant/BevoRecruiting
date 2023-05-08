@@ -1,0 +1,29 @@
+﻿@model sp23Team13FinalProject.Models.CompanySearch
+
+@{
+    ViewData["Title"] = "Search Employers";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="DisplaySearchResults" method="get">
+    <div class="form-group">
+        <label asp-for="NameSearch">Company Name:</label>
+        <input asp-for="NameSearch" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="IndustrySearch">Industry:</label>
+        <input asp-for="IndustrySearch" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="LocationSearch">Location:</label>
+        <input asp-for="LocationSearch" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PositionTypeSearch">Position Type:</label>
+        <select asp-for="PositionTypeSearch" asp-items="Html.GetEnumSelectList<sp23Team13FinalProject.Models.PositionType>()" class="form-control">
+            <option value="">-- Select Position Type --</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>

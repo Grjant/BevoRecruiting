@@ -1,0 +1,155 @@
+@model IEnumerable<sp23Team13FinalProject.Models.Interview>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @*<a asp-action="UpdatePosition">Schedule Interview</a>
+        <a asp-action="CreateSlot">Create New Interview Slot</a>
+        <a asp-action="InterviewSearchForm"> View Schedule</a>*@
+    @if (User.IsInRole("Student"))
+    {
+        <p>
+            <a asp-action="UpdatePosition">Schedule Interview</a>
+        </p>
+    }
+    @if (User.IsInRole("Recruiter"))
+    {
+        <p>
+            <a asp-action="CreateSlot">Create New Interview Slot</a>
+        </p>
+    }
+    @if (User.IsInRole("Recruiter"))
+    {
+        <p>
+            <a asp-action="RecruiterSearchForm">See Rooms by Date Range</a>
+        </p>
+    }
+    @if (User.IsInRole("CSO"))
+    {
+        <p>
+            <a asp-action="RecruiterSearchForm">See Rooms by Date Range</a>
+        </p>
+    }
+    @if (User.IsInRole("CSO"))
+    {
+        <p>
+            <a asp-action="CreateSlot">Create New Interview Slot</a>
+        </p>
+    }
+    @if (User.IsInRole("CSO"))
+    {
+        <p>
+            <a asp-action="InterviewSearchForm"> View Schedule</a>
+        </p>
+    }
+    @if (User.IsInRole("CSO"))
+    {
+        <p>
+            <a asp-action="Map">View Visual Display</a>
+        </p>
+    }
+    <br />
+    <div>
+        <br />
+        <form class="d-inline-block">
+            <button type="submit" class="btn btn-success" formaction="@Url.Action("Index", "Positions")">
+                View Positions
+            </button>
+        </form>
+    </div>
+    <div class="d-inline-flex">
+        <form class="d-inline-block">
+            <button type="submit" class="btn btn-success" formaction="@Url.Action("Index", "Applications")">
+                View Applications
+            </button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Position.PositionTitle)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Position.Companies.CompanyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InterviewerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Applicant)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Position.PositionTitle)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position.Companies.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InterviewerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Applicant.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomNumber)
+                    </td>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Student"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.InterviewID">Reschedule</a>
+                        }
+                        @if (User.IsInRole("CSO"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.InterviewID">Reschedule</a>
+                        } |
+
+                        <a asp-action="Details" asp-route-id="@item.InterviewID">View Details</a> |
+                        @if (User.IsInRole("CSO") || User.IsInRole("Recruiter"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.InterviewID">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

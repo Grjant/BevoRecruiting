@@ -1,0 +1,25 @@
+@model sp23Team13FinalProject.Models.AppUser
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+
+    <div>
+        <a asp-action="Register" class="btn btn-success" asp-controller="Account">Create New Student</a>
+    </div>
+    <div>
+        <a asp-action="CreateRecruiter" class="btn btn-success" asp-controller="AppUsers">Create New Recruiter</a>
+    </div>
+    <div>
+        <a asp-action="CreateCSO" class="btn btn-success" asp-controller="AppUsers">Create New CSO</a>
+    </div>
+
+</html>

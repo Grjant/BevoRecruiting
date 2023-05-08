@@ -1,0 +1,17 @@
+﻿@model sp23Team13FinalProject.Models.Application
+
+@{
+    ViewData["Title"] = "Rejected";
+}
+
+<h4>The application has been rejected. </h4>
+<hr />
+
+<form asp-action="RejectionConfirmation" asp-controller="Applications" asp-route-id="@Model.ApplicationID" method="post">
+    <input type="hidden" asp-for="ApplicationID" />
+    <button type="submit">Reject</button>
+</form>
+
+<div>
+    <a asp-action="Index" >Back to List</a>
+</div>

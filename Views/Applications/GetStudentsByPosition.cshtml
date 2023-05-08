@@ -1,0 +1,31 @@
+﻿@model List<AppUser>
+
+<h1>List of Students</h1>
+
+@if (Model.Count == 0)
+    {
+    <p>No students found.</p>
+    }
+    else
+    {
+    <table>
+        <thead>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+                {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="AppUsers" asp-route-id="@student.Id">@student.FirstName @student.LastName</a>
+                    </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    @if (User.IsInRole("Recruiter"))
+        {
+        <a asp-controller="Applications" asp-action="AddStudents" asp-route-Id="@ViewBag.PositionID">List of Applicants</a>
+        }
+    }

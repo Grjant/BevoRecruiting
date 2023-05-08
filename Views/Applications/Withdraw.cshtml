@@ -1,0 +1,17 @@
+@model sp23Team13FinalProject.Models.Application
+
+@{
+    ViewData["Title"] = "Withdraw";
+}
+
+<h4>Are you sure you want to withdraw your application?</h4>
+<hr />
+
+<form asp-action="WithdrawConfirmed" asp-controller="Applications" asp-route-id = "@Model.ApplicationID" method="post">
+    <input type="hidden" asp-for="ApplicationID" />
+    <button type="submit">Withdraw</button>
+</form>
+
+<div>
+    <a asp-action="Index" >View My Applications</a>
+</div>

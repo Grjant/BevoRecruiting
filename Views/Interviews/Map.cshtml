@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Map";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h1>@ViewData["Title"]</h1>
+                </div>
+                <div class="card-body">
+                    <form method="get" asp-controller="Interviews" asp-action="Map">
+                        <div class="form-group row">
+                            <label for="datePicker" class="col-md-4 col-form-label text-md-right">Date:</label>
+                            <div class="col-md-6">
+                                <input type="date" id="datePicker" name="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+                            </div>
+                        </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-success">View Map</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    @if (ViewBag.BookedRooms != null)
+                    {
+                        <h2>Interview Room Availability for @ViewBag.Date.ToString("MM-dd-yyyy")</h2>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Room Number</th>
+                                        <th>Availability</th>
+                                        <th>Booked Start Times</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var room in ViewBag.BookedRooms)
+                                    {
+                                        <tr>
+                                            <td>@room.Key</td>
+                                            <td>@(room.Value.Count > 0 ? "Booked" : "Available")</td>
+                                            <td>
+                                                @foreach (var time in room.Value)
+                                                {
+                                                    <div>@time.ToString("hh:mm tt")</div>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

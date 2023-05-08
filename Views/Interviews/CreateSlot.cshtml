@@ -1,0 +1,57 @@
+﻿@model sp23Team13FinalProject.Models.Interview
+@using sp23Team13FinalProject.Utilities
+
+
+@{
+    ViewData["Title"] = "CreateSlot";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateSlot">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="InterviewerName" class="control-label"></label>
+                <select asp-for="InterviewerName" class="form-control" asp-items="@ViewBag.Recruiters">
+                    <option value="">-- Select the Interviewer Name --</option>
+                </select>
+                <span asp-validation-for="InterviewerName" class="text-danger"></span>
+            </div>
+            <input type="hidden" name="CompanyName" value="@ViewBag.CompanyName" />
+            <div class="form-group">
+                <label asp-for="Recruiter.Company" class="control-label"></label>
+                <select asp-for="Recruiter.Company" class="form-control" asp-items="@ViewBag.CompanyName">
+                    <option value="">-- Select a Company --</option>
+                </select>
+                <span asp-validation-for="Recruiter.Company" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" type="date" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartTime" class="control-label"></label>
+                <select asp-for="StartTime" asp-items="@ViewBag.InterviewStartTimes" class="form-control"></select>
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyEndTime" class="control-label"></label>
+                <select asp-for="CompanyEndTime" asp-items="@ViewBag.InterviewCompanyEndTimes" class="form-control"></select>
+                <span asp-validation-for="CompanyEndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

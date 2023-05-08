@@ -1,0 +1,130 @@
+@model IEnumerable<sp23Team13FinalProject.Models.Position>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<h1>Search Open Positions</h1>
+
+        <a asp-action="DetailedSearch" class="btn btn-success">Detailed Search</a>
+        <a asp-action="Index" class="btn btn-danger">Show All</a>
+    </p>
+
+<p>Displaying @ViewBag.SelectedPositions out of @ViewBag.AllPositions Positions </p>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Recruiter") || User.IsInRole("CSO"));
+        
+            <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PositionTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PositionType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Deadline)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicableMajors)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Companies.CompanyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Companies.Industry)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                //Is the sign correct on this if statement
+                @if (Model.Any() && item.Deadline >= GlobalModel.GlobalDate)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PositionTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PositionType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Deadline)
+                        </td>
+                        <td>
+                            @if (item.ApplicableMajors != null && item.ApplicableMajors.Count > 0)
+                            {
+                                @foreach (var major in item.ApplicableMajors)
+                                {
+                                    @Html.DisplayFor(modelItem => major.MajorName) <br />
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Companies.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Companies.Industry)
+                        </td>
+
+                        <td>
+
+                            <a asp-action="Details" asp-route-id="@item.PositionID">Details</a>
+                            @*<a asp-action="Apply" asp-controller="Applications">Apply</a>*@
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Recruiter"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.PositionID">Edit</a>
+                                @*<a asp-action="Delete" asp-route-id="@item.PositionID">Delete</a>*@
+                            }
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("CSO"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.PositionID">Edit</a>
+                                @*<a asp-action="Delete" asp-route-id="@item.PositionID">Delete</a>*@
+                            }
+                        </td>
+
+
+                        <td>
+                            @if (User.IsInRole("Student"))
+                            {
+                                // change item.ApplicationID to take to the correct URL
+                                <a asp-controller="Applications" asp-action="Apply" asp-route-id="@item.PositionID">Apply</a>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+</body>
+</html>

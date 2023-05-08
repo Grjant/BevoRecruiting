@@ -1,0 +1,71 @@
+@model IEnumerable<sp23Team13FinalProject.Models.Application>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<h3>Applications</h3>
+<hr />
+@if (User.IsInRole("Student"))
+    {
+    <p>
+        <a asp-controller="Interviews" asp-action="UpdatePosition">Schedule an Interview</a>
+    </p>
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Position.PositionTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Position.Companies.CompanyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplicationStatus)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position.PositionTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position.Companies.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplicationStatus)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Student") && item.ApplicationStatus == ApplicationStatus.Accepted)
+                        {
+                            // change item.ApplicationID to take to the correct URL
+                            <a asp-controller="Interviews" asp-action="UpdatePosition">Schedule an Interview</a>
+                        }
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Recruiter"))
+                        {
+                            // change item.ApplicationID to take to the correct URL
+                            <a asp-controller="Applications" asp-action="GetStudentsByPosition" asp-route-id="@item.Position.PositionID">List of Applicants</a>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.ApplicationID">View Details</a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            }

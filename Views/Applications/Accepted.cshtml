@@ -1,0 +1,17 @@
+﻿@model sp23Team13FinalProject.Models.Application
+
+@{
+    ViewData["Title"] = "Accepted";
+}
+
+<h4> The application has been accepted! </h4>
+<hr />
+
+<form asp-action="AcceptanceConfirmed" asp-controller="Applications" asp-route-id="@Model.ApplicationID" method="post">
+    <input type="hidden" asp-for="ApplicationID" />
+    <button type="submit">Accept</button>
+</form>
+
+<div>
+    <button asp-action="Index" class="btn btn-success">Back to List</button>
+</div>
